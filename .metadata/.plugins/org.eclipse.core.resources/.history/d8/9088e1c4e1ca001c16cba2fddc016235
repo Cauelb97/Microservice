@@ -1,0 +1,56 @@
+package com.user.registro.models.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.user.registro.models.Gerente;
+import com.user.registro.models.User;
+
+public class GerenteRequestModel {
+
+	
+	private long id;
+	private String nome;
+	private List<User> users = new ArrayList<>();
+	
+	public static GerenteRequestModel from(Gerente gerente) {
+		GerenteRequestModel gerenteRequestModel = new GerenteRequestModel();
+		gerenteRequestModel.setId(gerente.getId());
+		gerenteRequestModel.setNome(gerente.getNome());
+		gerenteRequestModel.setUsersRequestModel(gerente.getUsers());
+		return gerenteRequestModel;
+	}
+	
+	public GerenteRequestModel() {}
+
+	public GerenteRequestModel(long id, String nome, List<User> usersRequestModel) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.users = usersRequestModel;
+	}
+
+
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<User> getUsersRequestModel() {
+		return users;
+	}
+
+	public void setUsersRequestModel(List<User> usersRequestModel) {
+		this.users = usersRequestModel;
+	}
+}

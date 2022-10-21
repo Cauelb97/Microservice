@@ -1,0 +1,16 @@
+package com.user.registro.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.user.registro.entity.Gerente;
+
+@Repository
+public interface GerenteRepository extends JpaRepository<Gerente, Long> {
+	boolean existsByEmail(String email);
+	List<Gerente> findAll(); 
+	Gerente findById(long id);
+	
+}

@@ -1,0 +1,17 @@
+package com.user.registro;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication(scanBasePackages={"com.user.registro"})
+@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class})
+public class RegistrodePontoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RegistrodePontoApplication.class, args);
+	}
+
+}

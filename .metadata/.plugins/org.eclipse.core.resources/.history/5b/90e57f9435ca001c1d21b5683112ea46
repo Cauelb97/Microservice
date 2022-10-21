@@ -1,0 +1,52 @@
+package com.user.registro.service;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import com.user.registro.entity.User;
+import com.user.registro.repository.UserRepository;
+
+@Service
+public class UserService {
+
+	final UserRepository userRepository;
+
+	public UserService(UserRepository userRepository) {
+		super();
+		this.userRepository = userRepository;
+	}
+	
+	@Transactional 
+	public User save (User user) {		
+		return userRepository.save(user);
+	}
+
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+
+	public List<User> findAll() {	
+		return userRepository.findAll();
+	}
+
+	public User findById(long id) {
+		return userRepository.findById(id);
+	}
+
+	
+	public User deleteUser(Long id) {
+		User user = findById(id);
+		userRepository.delete(user);	
+		return user;
+	}
+
+	@Transactional 
+	public User editUser(Long id, User user) {
+		User userToEdit = findById(id);
+		userToEdit.setSerialNumber(user.getSerialNumber());
+		return userToEdit;
+	}
+}

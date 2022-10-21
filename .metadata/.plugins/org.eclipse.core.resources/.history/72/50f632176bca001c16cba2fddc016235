@@ -1,0 +1,48 @@
+package com.user.registro.models;
+
+import java.util.Date;
+
+
+import com.user.registro.entities.User;
+
+public class RegistroRequestModel {
+
+	private Date pointRegistry;
+	private String justification;	
+	
+	
+	private User user;
+
+	public RegistroRequestModel() {}
+
+	public RegistroRequestModel(Date pointRegistry, String justification, User user) {
+		super();
+		this.pointRegistry = pointRegistry;
+		this.justification = justification;
+		this.user = user;
+	}
+
+	public Date getPointRegistry() {
+		return pointRegistry;
+	}
+
+	public void setPointRegistry(Date pointRegistry) {
+		this.pointRegistry = pointRegistry;
+	}
+
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+}

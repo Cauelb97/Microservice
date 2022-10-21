@@ -1,0 +1,67 @@
+package com.user.registro.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.user.registro.models.Registro;
+import com.user.registro.models.dto.RegistroRequestModel;
+import com.user.registro.services.RegistroService;
+
+@RestController 
+@RequestMapping("/registro") 
+public class RegistroController {
+
+private final RegistroService registroService;
+	
+	@Autowired
+	public RegistroController(RegistroService registroService){	
+	
+	this.registroService = registroService;
+}	
+	
+	@GetMapping("/all")
+	public List<Registro> findAll(){
+		return registroService.getRegistros();
+	}
+	
+	@GetMapping(value = "{id}")
+    public ResponseEntity<RegistroRequestModel> getRegistro(@PathVariable final Long id){
+        Registro registro = registroService.getRegistro(id);
+        return new ResponseEntity<>(RegistroRequestModel.from(registro), HttpStatus.OK);
+    }
+	
+	
+	@PostMapping(value="/inserir")
+    public ResponseEntity<RegistroRequestModel> addRegistro(@RequestBody @Valid final RegistroRequestModel registroRequestModel){
+        Registro registro = registroService.save(Registro.from(registroRequestModel));
+        return new ResponseEntity<>(RegistroRequestModel.from(registro), HttpStatus.OK);
+    }
+
+	
+	 @DeleteMapping(value = "{id}")
+	    public ResponseEntity<RegistroRequestModel> deleteRegistro(@PathVariable final Long id){
+		 Registro registro = registroService.deleteRegistro(id);
+	        return new ResponseEntity<>(RegistroRequestModel.from(registro), HttpStatus.OK);
+	    }
+	 
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "{id}")
+	public ResponseEntity<RegistroRequestModel> editRegistro(@PathVariable final Long id,
+													@RequestBody final RegistroRequestModel registroRequestModel){
+		Registro registro = registroService.editRegistro(id, Registro.from(registroRequestModel));
+			return new ResponseEntity<>(RegistroRequestModel.from(registro), HttpStatus.OK);
+	}
+}

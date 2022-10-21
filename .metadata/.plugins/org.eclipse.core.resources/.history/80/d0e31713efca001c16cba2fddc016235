@@ -1,0 +1,59 @@
+package com.user.registro.models.dto;
+
+import java.util.Date;
+import java.util.Objects;
+
+import com.user.registro.models.Registro;
+import com.user.registro.models.User;
+
+public class RegistroRequestModel {
+
+	private Date pointRegistry;
+	private String justification;	
+	
+	
+	private UserRequestModel user;
+
+	public RegistroRequestModel() {}
+
+	public RegistroRequestModel(Date pointRegistry, String justification, UserRequestModel user) {
+		super();
+		this.pointRegistry = pointRegistry;
+		this.justification = justification;
+		this.user = user;
+	}
+	
+	public static RegistroRequestModel from(Registro registro) {
+		RegistroRequestModel registroRequestModel = new RegistroRequestModel();
+		registroRequestModel.setPointRegistry(registro.getPontoregistrado());
+		registroRequestModel.setJustification(registro.getJustificativa());
+		if(Objects.nonNull(registro.getUserid())){
+            registroRequestModel.setUser(UserRequestModel.from(registro.getUserid()));
+        }
+		return registroRequestModel;
+	}
+
+	public Date getPointRegistry() {
+		return pointRegistry;
+	}
+
+	public void setPointRegistry(Date pointRegistry) {
+		this.pointRegistry = pointRegistry;
+	}
+
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
+
+	public UserRequestModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserRequestModel user) {
+		this.user = user;
+	}
+}

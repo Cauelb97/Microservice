@@ -1,0 +1,60 @@
+package com.user.registro.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.user.registro.exceptions.UserNotFoundException;
+import com.user.registro.models.Registro;
+import com.user.registro.models.User;
+import com.user.registro.repositories.RegistroRepository;
+import com.user.registro.repositories.UserRepository;
+
+@Service
+public class RegistroService {
+
+	
+	private final RegistroRepository registroRepository;
+
+	@Autowired
+	public RegistroService(RegistroRepository registroRepository) {
+		super();
+		this.registroRepository = registroRepository;
+	}
+	
+	
+	public Registro save (Registro registro) {		
+		return registroRepository.save(registro);
+	}
+
+
+	public List<Registro> getRegistros(){
+        return StreamSupport
+                .stream(registroRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
+	 public Registro getRegistro(Long id){
+	        return registroRepository.findById(id).orElseThrow(() ->
+	                new UserNotFoundException(id));
+	    }
+
+	
+	public Registro deleteRegistro(Long id) {
+		Registro registro = getRegistro(id);
+		registroRepository.delete(registro);	
+		return registro;
+	}
+
+	@Transactional 
+	public User editUser(Long id, User user) {
+		User userToEdit = getUser(id);
+		userToEdit.setSerialNumber(user.getSerialNumber());
+		return userToEdit;
+	}
+}

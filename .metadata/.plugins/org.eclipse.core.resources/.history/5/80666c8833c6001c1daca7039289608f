@@ -1,0 +1,158 @@
+package com.user.registro.entity;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+		@Column(name="name")
+	private String name;
+	
+	
+	@Column(name="cargo")
+	private String cargo;
+	
+	
+	@Column(name="email")
+	private String email;
+	
+	
+	@Column(name="password")
+	private String password;
+	
+	@ManyToOne(targetEntity = Gerente.class)
+	@JoinColumn(name = "gerente_idgerente") 
+	private Gerente gerenteid; 
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	private List<Registro> registro;
+	
+	
+	public User(int id, String name, String cargo, String email, String password, Gerente gerenteid) { //, List<Registro> registro
+		super();
+		this.id = id;
+		this.name = name;
+		this.cargo = cargo;
+		this.email = email;
+		this.password = password;
+//		this.registro = registro;
+		this.gerenteid = gerenteid;
+	}
+
+
+	public User() {}
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getCargo() {
+		return cargo;
+	}
+
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public Gerente getGerenteid() {
+		return gerenteid;
+	}
+
+
+	public void setGerenteid(Gerente gerenteid) {
+		this.gerenteid = gerenteid;
+	}
+
+
+	public List<Registro> getRegistro() {
+		return registro;
+	}
+
+
+	public void setRegistro(List<Registro> registro) {
+		this.registro = registro;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return id == other.id;
+	}
+	
+}

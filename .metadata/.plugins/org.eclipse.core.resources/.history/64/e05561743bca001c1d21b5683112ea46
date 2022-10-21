@@ -1,0 +1,40 @@
+package com.user.registro.model.request;
+
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import com.user.registro.entity.User;
+
+public class RegistroRequestModel {
+
+	private Date pointRegistry;
+	private String justification;	
+	
+	@NotNull
+	private User user;
+
+	public Date getPointRegistry() {
+		return pointRegistry;
+	}
+
+	public void setPointRegistry(Date pointRegistry) {
+		this.pointRegistry = pointRegistry;
+	}
+
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+}

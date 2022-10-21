@@ -1,0 +1,43 @@
+package com.user.registro.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import com.user.registro.entity.Gerente;
+import com.user.registro.entity.User;
+import com.user.registro.repository.GerenteRepository;
+import com.user.registro.repository.UserRepository;
+
+public class GerenteService {
+	final GerenteRepository gerenteRepository;
+
+	public GerenteService(GerenteRepository gerenteRepository) {
+		super();
+		this.gerenteRepository = gerenteRepository;
+	}
+	
+	@Transactional 
+	public Gerente save (Gerente gerente) {		
+		return gerenteRepository.save(gerente);
+	}
+
+	public boolean existsByEmail(String email) {
+		return gerenteRepository.existsByEmail(email);
+	}
+
+	public List<Gerente> findAll() {	
+		return gerenteRepository.findAll();
+	}
+
+	public Optional<Gerente> findById(int id) {
+		return gerenteRepository.findById(id);
+	}
+
+	@Transactional
+	public void deleteUser(Gerente gerente) {
+		gerenteRepository.delete(gerente);		
+	}
+
+}

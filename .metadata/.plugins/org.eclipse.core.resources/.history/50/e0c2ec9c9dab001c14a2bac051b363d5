@@ -1,0 +1,5 @@
+package com.appsdeveloperblog.app.ws.controller;
+
+public class UserController {
+
+}

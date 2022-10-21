@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.user.registro.repository.ResgistroRepository.java&apos; to &apos;RegistroRepository.java&apos;&#x0D;&#x0A;- Original project: &apos;RegistrodePonto&apos;&#x0D;&#x0A;- Original element: &apos;com.user.registro.repository.ResgistroRepository.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.user.registro.repository.RegistroRepository.java&apos;" description="Rename compilation unit &apos;ResgistroRepository.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.user.registro.repository{ResgistroRepository.java" name="RegistroRepository.java" references="false" stamp="1650324511318" version="1.0"/>
+</session>

@@ -1,0 +1,15 @@
+package com.user.registro.model.request;
+
+import javax.validation.constraints.NotNull;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class GerenteRequestModel {
+
+	@NotNull	
+	private String nome;
+
+}

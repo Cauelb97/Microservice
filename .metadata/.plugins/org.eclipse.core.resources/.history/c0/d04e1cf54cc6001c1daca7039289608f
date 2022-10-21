@@ -1,0 +1,83 @@
+package com.user.registro.entity;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+
+
+
+@Data
+@Entity
+@Table(name = "gerente")
+public class Gerente implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "idgerente")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	private String nome;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "id")
+	@Cascade(CascadeType.ALL)
+	private List<User> users = new ArrayList<>(); 
+
+	public Gerente() { 
+	}
+
+	public Gerente(String nome) { //List<User> user
+		super();
+		this.nome = nome;
+		//this.user = user;
+	}
+	
+	public void addUser(User user) {
+		users.add(user);
+	}
+	
+	public void removeUser(User user) {
+		users.remove(user);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<User> getUser() {
+		return users;
+	}
+
+	public void setUser(List<User> user) {
+		this.users = user;
+	}
+}

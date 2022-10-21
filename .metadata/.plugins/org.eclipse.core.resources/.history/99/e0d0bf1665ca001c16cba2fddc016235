@@ -1,0 +1,84 @@
+package com.user.registro.services;
+
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.user.registro.entities.Gerente;
+import com.user.registro.entities.User;
+import com.user.registro.exceptions.UserIsAlreadyAssingnedException;
+import com.user.registro.repositories.GerenteRepository;
+
+
+
+@Service
+public class GerenteService {
+	
+	@Autowired
+	private final GerenteRepository gerenteRepository;
+	
+	@Autowired
+	private final UserService userService;
+
+	
+	public GerenteService(GerenteRepository gerenteRepository, UserService userService) {
+		this.gerenteRepository = gerenteRepository;
+		this.userService = userService;
+	}
+	
+
+
+
+
+	@Transactional 
+	public Gerente save (Gerente gerente) {		
+		return gerenteRepository.save(gerente);
+	}
+
+	public boolean existsByEmail(String email) {
+		return gerenteRepository.existsByEmail(email);
+	}
+
+	public List<Gerente> findAll() {	
+		return gerenteRepository.findAll();
+	}
+
+	public Gerente findById(long id) {
+		return gerenteRepository.findById(id);
+	}
+	
+	@Transactional 
+	public Gerente editUser(Long id, Gerente gerente) {
+		Gerente gerenteToEdit = findById(id);
+		gerenteToEdit.setSerialNumber(gerente.getSerialNumber());
+		return gerenteToEdit;
+	}
+
+	public void deleteGerente(Gerente gerente) {
+		gerenteRepository.delete(gerente);		
+	}
+	
+	@Transactional
+	public Gerente addUserToGerente (long gerenteId, long userId) {
+		Gerente gerente = findById(gerenteId);
+		User user = userService.findById(userId);
+		if (Objects.nonNull(user.getGerenteid())) {
+			throw new UserIsAlreadyAssingnedException(userId, user.getGerenteid().getId());
+		}
+		gerente.addUser(user);
+		user.setGerenteid(gerente);
+		return gerente;
+	}
+	
+	@Transactional
+	public Gerente removeUserToGerente (long gerenteId, long userId) {
+		Gerente gerente = findById(gerenteId);
+		User user = userService.findById(userId);
+		gerente.removeUser(user);
+		return gerente;
+	}
+
+}

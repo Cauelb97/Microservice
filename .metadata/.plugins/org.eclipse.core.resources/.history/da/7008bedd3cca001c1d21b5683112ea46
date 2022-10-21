@@ -1,0 +1,76 @@
+package com.user.registro.service;
+
+import java.util.List;
+import java.util.Objects;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.user.registro.entity.Gerente;
+import com.user.registro.entity.User;
+import com.user.registro.exception.UserIsAlreadyAssingnedException;
+import com.user.registro.repository.GerenteRepository;
+
+@Service
+public class GerenteService {
+	@Autowired
+	private final GerenteRepository gerenteRepository;
+	private final UserService userService;
+
+	@Autowired
+	public GerenteService(GerenteRepository gerenteRepository, UserService userService) {
+		this.gerenteRepository = gerenteRepository;
+		this.userService = userService;
+	}
+	
+	@Transactional 
+	public Gerente save (Gerente gerente) {		
+		return gerenteRepository.save(gerente);
+	}
+
+	public boolean existsByEmail(String email) {
+		return gerenteRepository.existsByEmail(email);
+	}
+
+	public List<Gerente> findAll() {	
+		return gerenteRepository.findAll();
+	}
+
+	public Gerente findById(long id) {
+		return gerenteRepository.findById(id);
+	}
+	
+	@Transactional 
+	public Gerente editUser(Long id, Gerente gerente) {
+		Gerente gerenteToEdit = findById(id);
+		gerenteToEdit.setSerialNumber(gerente.getSerialNumber());
+		return gerenteToEdit;
+	}
+
+	@Transactional
+	public void deleteGerente(Gerente gerente) {
+		gerenteRepository.delete(gerente);		
+	}
+	
+	@Transactional
+	public Gerente addUserToGerente (long gerenteId, long userId) {
+		Gerente gerente = findById(gerenteId);
+		User user = userService.findById(userId);
+		if (Objects.nonNull(user.getGerenteid())) {
+			throw new UserIsAlreadyAssingnedException(userId, user.getGerenteid().getId());
+		}
+		gerente.addUser(user);
+		return gerente;
+	}
+	
+	@Transactional
+	public Gerente removeUserToGerente (long gerenteId, long userId) {
+		Gerente gerente = findById(gerenteId);
+		User user = userService.findById(userId);
+		gerente.removeUser(user);
+		return gerente;
+	}
+
+}

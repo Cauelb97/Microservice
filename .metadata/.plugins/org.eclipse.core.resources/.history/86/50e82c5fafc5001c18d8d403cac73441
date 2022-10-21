@@ -1,0 +1,23 @@
+package com.user.registro.model.request;
+
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import com.user.registro.entity.User;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class RegistroRequestModel {
+
+	private Date pointRegistry;
+	private String justification;	
+	
+	@NotNull
+	private User user;
+	
+	
+}

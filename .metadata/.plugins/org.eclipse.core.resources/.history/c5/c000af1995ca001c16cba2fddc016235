@@ -1,0 +1,165 @@
+package com.user.registro.models;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.*;
+
+import com.user.registro.models.dto.UserRequestModel;
+
+
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private String serialNumber;
+
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+		private String name;
+	
+	
+	private String cargo;
+	
+	
+	private String email;
+	
+	
+	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name = "gerente_idgerente") 
+	private Gerente gerenteid; 
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	private List<Registro> registro;
+	
+	
+	
+	
+	public User(long id, String name, String cargo, String email, String password, Gerente gerenteid) { //, List<Registro> registro
+		super();
+		this.id = id;
+		this.name = name;
+		this.cargo = cargo;
+		this.email = email;
+		this.password = password;
+//		this.registro = registro;
+		this.gerenteid = gerenteid;
+	}
+
+
+	public User() {}
+
+	public static User from(UserRequestModel userRequestModel) {
+		User user = new User();
+		user.setSerialNumber(userRequestModel.getSerialNumber());
+		return user;
+	}
+
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getCargo() {
+		return cargo;
+	}
+
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public Gerente getGerenteid() {
+		return gerenteid;
+	}
+
+
+	public void setGerenteid(Gerente gerenteid) {
+		this.gerenteid = gerenteid;
+	}
+//
+//
+//	public List<Registro> getRegistro() {
+//		return registro;
+//	}
+//
+//
+//	public void setRegistro(List<Registro> registro) {
+//		this.registro = registro;
+//	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return id == other.id;
+	}
+	
+}

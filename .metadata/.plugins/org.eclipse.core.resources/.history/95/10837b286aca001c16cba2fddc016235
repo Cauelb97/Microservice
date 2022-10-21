@@ -1,0 +1,19 @@
+package com.user.registro;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class})
+@ComponentScan ({"com.user.registro", "com.user.registro.repositories.GerenteRepository"})
+@EnableMongoRepositories ("com.server.repositories")
+public class RegistrodePontoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RegistrodePontoApplication.class, args);
+	}
+
+}

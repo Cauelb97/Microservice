@@ -1,0 +1,43 @@
+package com.user.registro.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.user.registro.entities.Gerente;
+import com.user.registro.models.dto.GerenteRequestModel;
+import com.user.registro.services.GerenteService;
+
+@RequestMapping("/gerente") 
+@RestController 
+public class GerenteController {
+	
+	
+	private final GerenteService gerenteService;
+
+	@Autowired
+	public GerenteController(GerenteService gerenteService) {
+		this.gerenteService = gerenteService;
+	}
+
+
+
+	@PostMapping(value = "{gerenteId}/user/{userId}/add")
+		public ResponseEntity<GerenteRequestModel> addUserToGerente(@PathVariable final Long gerenteId,
+																	@PathVariable final Long userId){
+		Gerente gerente = gerenteService.addUserToGerente(gerenteId, userId);
+		return new ResponseEntity<>(GerenteRequestModel.from(gerente), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "{gerenteId}/user/{userId}/remove")
+	public ResponseEntity<GerenteRequestModel> removeUserToGerente(@PathVariable final Long gerenteId,
+																@PathVariable final Long userId){
+	Gerente gerente = gerenteService.removeUserToGerente(gerenteId, userId);
+	return new ResponseEntity<>(GerenteRequestModel.from(gerente), HttpStatus.OK);
+}
+}

@@ -1,0 +1,5 @@
+package com.user.registro.exception;
+
+public class UserIsAlreadyAssingnedException {
+
+}
